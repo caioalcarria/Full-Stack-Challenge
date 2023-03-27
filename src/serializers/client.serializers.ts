@@ -11,7 +11,7 @@ const clientSerializer: SchemaOf<IClientRequest> = yup.object().shape({
     email: yup.string().max(50).email().required(),
     phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required(),
     sector: yup.string().max(50).required(),
-    photo: yup.string().max(100).required()
+    photo: yup.string().max(800).required()
     
 })
 
@@ -20,7 +20,7 @@ const clientUpdateSerializer: SchemaOf<IClientUpdate> = yup.object().shape({
     email: yup.string().max(50).email().notRequired(),
     phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').notRequired(),
     sector: yup.string().max(50).notRequired(),
-    photo: yup.string().max(100).notRequired()
+    photo: yup.string().max(800).notRequired()
 })
 
 

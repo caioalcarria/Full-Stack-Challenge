@@ -1,5 +1,5 @@
 import { IClientUpdate } from "../../interfaces/clients";
-import AppDataSource from "../../data-source";
+import {AppDataSource} from "../../data-source";
 import { Client } from "../../entities/clients.entity";
 import { AppError } from "../../errors/AppError";
 

@@ -18,7 +18,7 @@ class Client {
     @Column({length: 50})
     sector: string
 
-    @Column({length: 100})
+    @Column({length: 800})
     photo: string
 
     @CreateDateColumn()

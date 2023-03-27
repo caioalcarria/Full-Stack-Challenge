@@ -6,7 +6,7 @@ import createContactService from "../services/contacts/createContact.service";
 import deleteContactService from "../services/contacts/deleteContact.service";
 import uptadeContactService from "../services/contacts/uptadeContact.service";
 import listContactService from "../services/contacts/listContact.service";
-
+ 
 const createContactControler = async (req: Request, res: Response) => {
     const contactData: IContactRequest = req.body
     const createContact = await createContactService(contactData)

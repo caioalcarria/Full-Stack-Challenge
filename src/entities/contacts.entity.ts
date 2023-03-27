@@ -21,7 +21,7 @@ class Contacts {
     @Column({length: 100})
     linkedin: string
 
-    @Column({length: 200})
+    @Column({length: 800})
     photo: string
 
     @CreateDateColumn()

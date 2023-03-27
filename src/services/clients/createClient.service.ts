@@ -1,31 +1,37 @@
-import { IUserRequest, IUserResponse } from "../../interfaces/clients";
+import { IClientRequest, IClientResponse } from "../../interfaces/clients";
 import AppDataSource from "../../data-source";
-import { User } from "../../entities/user.entity";
+import { Client } from "../../entities/clients.entity";
 import { AppError } from "../../errors/AppError";
-import { userWithoutPasswordSerializer } from "../../serializers/client.serializers";
 
 
-const createUserService = async (userData : IUserRequest): Promise<IUserResponse> => {
-    const userRepository = AppDataSource.getRepository(User)
 
-    const user = await userRepository.findOneBy({
-        email: userData.email
+const createClientService = async (clientData : IClientRequest): Promise<IClientResponse> => {
+    const clientRepository = AppDataSource.getRepository(Client)
+
+    const clientEmail = await clientRepository.findOneBy({
+        email: clientData.email
     })
 
-    if(user){
+    const clientPhone = await clientRepository.findOneBy({
+        phone: clientData.phone
+    })
+
+
+    if(clientEmail){
         throw new AppError('email already exists ', 409)
     }
+    if(clientPhone){
+        throw new AppError('phone already exists ', 409)
+    }
+
+    
    
-    const createUser = userRepository.create(userData)
-    await userRepository.save(createUser)
-    
-    const userWithoutPassword  = await userWithoutPasswordSerializer.validate(createUser, {
-        stripUnknown: true
-    })
+    const createClient = clientRepository.create(clientData)
+    await clientRepository.save(createClient)
     
     
     
-    return userWithoutPassword
+    return createClient
 }
 
-export default createUserService 
+export default createClientService 

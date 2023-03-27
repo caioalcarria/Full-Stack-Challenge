@@ -15,7 +15,7 @@ const clientsRoutes = Router()
 
 clientsRoutes.post('', ensureDataIsValidMiddleware(clientSerializer) , createClientController)
 
-clientsRoutes.get('', ensureIdValidMiddleware, listClientsControler)
+clientsRoutes.get('', listClientsControler)
 
 clientsRoutes.patch('/:id', ensureIdValidMiddleware,  ensureDataIsValidMiddleware(clientUpdateSerializer), uptadeClientController)
 clientsRoutes.delete('/:id',ensureIdValidMiddleware, deleteClientController)

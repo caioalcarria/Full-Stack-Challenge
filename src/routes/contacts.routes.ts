@@ -6,14 +6,16 @@ import { contactSerializer, contactUpdateSerializer } from '../serializers/conta
 import { 
     createContactControler,
     uptadeContactController,
-    deleteContactController 
+    deleteContactController,
+    listContactControler
 } from '../controllers/contact.controllers'
-
 
 
 const contactsRoutes = Router()
 
 contactsRoutes.post('',ensureDataIsValidMiddleware(contactSerializer), createContactControler )
+
+contactsRoutes.get('', listContactControler)
 
 contactsRoutes.patch('/:id', ensureIdValidMiddleware,  ensureDataIsValidMiddleware(contactUpdateSerializer), uptadeContactController)
 contactsRoutes.delete('/:id',ensureIdValidMiddleware, deleteContactController)

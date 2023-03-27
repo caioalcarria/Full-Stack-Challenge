@@ -5,6 +5,7 @@ export interface IContactRequest {
     sector: string
     photo: string
     linkedin: string
+    clientId:string
 }
 
 
@@ -17,6 +18,7 @@ export interface IContactResponse {
     photo: string
     createdAt: Date
     linkedin: string
+
 }
 
 
@@ -27,5 +29,6 @@ export interface IContactUpdate {
     sector?: string
     photo?: string
     linkedin?: string
+    clientId?:string
 
 }

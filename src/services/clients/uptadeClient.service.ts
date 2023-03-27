@@ -1,46 +1,46 @@
-import { IUserUpdate } from "../../interfaces/clients";
+import { IClientUpdate } from "../../interfaces/clients";
 import AppDataSource from "../../data-source";
-import { User } from "../../entities/user.entity";
+import { Client } from "../../entities/clients.entity";
 import { AppError } from "../../errors/AppError";
-import { userWithoutPasswordSerializer } from "../../serializers/client.serializers";
 
-const uptadeUserService = async (id:string, userUpdateData: IUserUpdate, admStatus:boolean, idReqUser:string) => {
+const uptadeClientService = async (idClient:string, clientUpdateData:IClientUpdate) => {
 
-    if(!admStatus&&idReqUser!=id){
+    const clientRepository = AppDataSource.getRepository(Client)
+    const client = await clientRepository.findOneBy({id:idClient})
 
-        throw new AppError('No admin permission', 401)
-    }
-    console.log(userUpdateData)
-
-    const userRepository = AppDataSource.getRepository(User)
-
-    const user = await userRepository.findOneBy({id:id})
-    if(!user){
+    if(!client){
         throw new AppError('user not found ', 404)
     }
-    
 
-    const existsEmail = await userRepository.findOneBy({
-        email: userUpdateData.email
-    })
-
-    if(existsEmail){
-        throw new AppError('email already exists ', 400)
+    console.log(client.email)
+    console.log(clientUpdateData.email)
+    if(clientUpdateData.email&&client.email!=clientUpdateData.email){
+        const existsEmail = await clientRepository.findOneBy({
+        email: clientUpdateData.email
+        })
+        if(existsEmail){
+            throw new AppError('email already exists ', 409)
+        }
     }
-    
+    if(clientUpdateData.phone&&client.phone!=clientUpdateData.phone){
+        const existsPhone = await clientRepository.findOneBy({
+        phone: clientUpdateData.phone
+        })
+        if(clientUpdateData.phone &&existsPhone){
+            throw new AppError('phone already exists ', 409)
+        }
+    }
 
-    const updatedUser = userRepository.create({
-        ...user,
-        ...userUpdateData
+
+    const updatedClient = clientRepository.create({
+        ...client,
+        ...clientUpdateData
     })
-    await userRepository.save(updatedUser)
+    await clientRepository.save(updatedClient)
 
-    const userWithoutPassword  = await userWithoutPasswordSerializer.validate(updatedUser, {
-        stripUnknown: true
-    })
 
-    return userWithoutPassword
+    return updatedClient
     
 }
 
-export default uptadeUserService 
+export default uptadeClientService 

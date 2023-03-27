@@ -12,7 +12,8 @@ const contactSerializer: SchemaOf<IContactRequest> = yup.object().shape({
     phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').required(),
     sector: yup.string().max(50).required(),
     photo: yup.string().max(100).required(),
-    linkedin: yup.string().max(50).required()
+    linkedin: yup.string().max(50).required(),
+    clientId: yup.string().notRequired()
     
 })
 
@@ -22,7 +23,9 @@ const contactUpdateSerializer: SchemaOf<IContactUpdate> = yup.object().shape({
     phone: yup.string().matches(phoneRegExp, 'Phone number is not valid').notRequired(),
     sector: yup.string().max(50).notRequired(),
     photo: yup.string().max(100).notRequired(),
-    linkedin: yup.string().max(50).notRequired()
+    linkedin: yup.string().max(50).notRequired(),
+    clientId: yup.string().notRequired()
+
 })
 
 

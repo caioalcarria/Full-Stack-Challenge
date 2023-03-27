@@ -1,22 +1,28 @@
-import { Entity, ManyToOne, OneToOne,JoinColumn,  OneToMany, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, BeforeUpdate} from 'typeorm'
-import { hashSync } from 'bcryptjs'
-import { Address } from './addresses.entity'
-import { Schedules_users_properties } from './schedules_users_properties.entity'
-import { Categories } from './categories.entity'
+import { Entity, ManyToOne, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn} from 'typeorm'
+import { Client } from './clients.entity'
 
-@Entity('properties')
-class Properties {
+@Entity('contacts')
+class Contacts {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({default:false})
-    sold: boolean
+    @Column({length: 50, unique:true})
+    email: string
 
-    @Column({type: "decimal", precision: 12, scale: 2, default: 0 })
-    value: number
+    @Column({length: 50})
+    name: string
 
-    @Column({type:"integer"})
-    size: number
+    @Column({length: 50, unique:true})
+    phone: string
+
+    @Column({length: 50})
+    sector: string
+
+    @Column({length: 100})
+    linkedin: string
+
+    @Column({length: 200})
+    photo: string
 
     @CreateDateColumn()
     createdAt: Date
@@ -24,16 +30,10 @@ class Properties {
     @UpdateDateColumn()
     updatedAt: Date
 
-    @OneToOne(() => Address) @JoinColumn()
-    address: Address
-
-    @OneToMany(() => Schedules_users_properties, schedules_users_properties => schedules_users_properties.properties)
-    schedules_users_properties: Schedules_users_properties[]
-
-    @ManyToOne(() => Categories, category => category.properties)
-    category: Categories
+    @ManyToOne(() => Client, client => client.contacts)
+    client: Client
     
    
 }
 
-export {Properties}
+export {Contacts}

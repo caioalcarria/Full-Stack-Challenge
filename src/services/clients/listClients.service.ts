@@ -1,19 +1,18 @@
 import AppDataSource from "../../data-source";
-import { User } from "../../entities/user.entity";
-import { listUsersWithoutPassword } from "../../serializers/client.serializers";
+import { Client } from "../../entities/clients.entity";
 
 
-const listUsersService = async () => {
-    const userRepository = AppDataSource.getRepository(User)
-    const usersList = userRepository.find({})
+const listClientsService = async () => {
+    const clientRepository = AppDataSource.getRepository(Client)
 
-
-
-    const returnedData  = await listUsersWithoutPassword.validate(await usersList, {
-        stripUnknown: true
+    const clientList = clientRepository.find({
+        relations: {
+            contacts: true
+        }
     })
-    
-    return returnedData
+
+
+    return clientList
 }
 
-export default listUsersService 
+export default listClientsService 

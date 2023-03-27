@@ -1,28 +1,22 @@
 import AppDataSource from "../../data-source";
-import { User } from "../../entities/user.entity";
+import { Client } from "../../entities/clients.entity";
 import { AppError } from "../../errors/AppError";
 
 
 
-const deleteUserService = async (id:string) => {
+const deleteClientService = async (idClient:string) => {
 
-    const userRepository = AppDataSource.getRepository(User)
-
-    const user = await userRepository.findOneBy({id:id})
+    const clientRepository = AppDataSource.getRepository(Client)
+    const client = await clientRepository.findOneBy({id:idClient})
     
-    if(!user){
-        throw new AppError('user not found ', 404)
-    }
-    if(user.isActive==false){
-        throw new AppError('user is already inactive ', 400)
+    if(!client){
+        throw new AppError('client not found ', 404)
     }
 
-    user.isActive = false
-
-    await userRepository.save(user)
+    await clientRepository.delete({id:idClient})   
 
     return {}
 
 }
 
-export default deleteUserService 
+export default deleteClientService 
